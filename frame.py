@@ -31,6 +31,8 @@ class Frame(object):
 
         # Window
         sdl2.ext.init()
+        sdl2.SDL_SetHint(sdl2.SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, b'1')
+
         self.__win = sdl2.ext.Window(
             self.__text,
             size=(self.__width, self.__height),
@@ -67,6 +69,21 @@ class Frame(object):
         self.__mouse_global_y = ctypes.c_int()
         self.__mouse_start_x = ctypes.c_int()
         self.__mouse_start_y = ctypes.c_int()
+    
+    def __repr__(self) -> str:
+        return (
+            f'{self.__class__.__name__}('
+            f'width={self.__width!r}, '
+            f'height={self.__height!r}, '
+            f'text={self.__text!r}, '
+            f'csd={self.__csd!r}, '
+            f'csd_move={self.__csd_move!r}, '
+            f'csd_resize={self.__csd_resize!r}, '
+            f'csd_edge={self.__csd_edge!r}'
+            ')')
+    
+    def __str__(self) -> str:
+        return self.__class__.__name__
 
     def run(self) -> int:
         """..."""
