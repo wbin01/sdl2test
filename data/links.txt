@@ -1,3 +1,4 @@
 Doc:
-    https://pysdl2.readthedocs.io/en/0.9.13/install.html
-    https://pysdl2.readthedocs.io/en/0.9.13/tutorial/helloworld.html
+    Install: https://pysdl2.readthedocs.io/en/0.9.13/install.html
+    Hello:   https://pysdl2.readthedocs.io/en/0.9.13/tutorial/helloworld.html
+    Modules: https://pysdl2.readthedocs.io/en/0.9.13/modules/index.html
