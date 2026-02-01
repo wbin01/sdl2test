@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import ctypes
 
@@ -32,6 +33,10 @@ class Frame(object):
         # Window
         sdl2.ext.init()
         sdl2.SDL_SetHint(sdl2.SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, b'1')
+        sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_RED_SIZE, 8)
+        sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_GREEN_SIZE, 8)
+        sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_BLUE_SIZE, 8)
+        sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_ALPHA_SIZE, 8)
 
         self.__win = sdl2.ext.Window(
             self.__text,
@@ -59,7 +64,7 @@ class Frame(object):
         # Control - Window move resize
         self.__start_w = ctypes.c_int()
         self.__start_h = ctypes.c_int()
-        self.__mouse_action = None # None | "drag" | "resize"
+        self.__mouse_action = None # None | 'drag' | 'resize'
         self.__cursor_edge = None
         self.__resizig = False
         self.__saved_edge_name = None
