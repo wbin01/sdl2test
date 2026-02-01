@@ -4,7 +4,7 @@ import sdl2.ext
 import ctypes
 import math
 
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 400, 300
 RADIUS = 24
 """
 window = sdl2.SDL_CreateShapedWindow(

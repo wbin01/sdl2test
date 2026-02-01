@@ -2,3 +2,13 @@ Doc:
     Install: https://pysdl2.readthedocs.io/en/0.9.13/install.html
     Hello:   https://pysdl2.readthedocs.io/en/0.9.13/tutorial/helloworld.html
     Modules: https://pysdl2.readthedocs.io/en/0.9.13/modules/index.html
+
+
+QT_QPA_PLATFORM=xcb python main.py
+SDL_VIDEODRIVER=x11 python main.py
+https://stackoverflow.com/questions/62574701/sdl2-transparent-background
+
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_RED_SIZE, 8)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_GREEN_SIZE, 8)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_BLUE_SIZE, 8)
+sdl2.SDL_GL_SetAttribute(sdl2.SDL_GL_ALPHA_SIZE, 8)

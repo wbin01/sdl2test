@@ -5,7 +5,7 @@ import sdl2.ext
 
 def run():
     sdl2.ext.init()
-    window = sdl2.ext.Window('Min Window', size=(800, 600))
+    window = sdl2.ext.Window('Min Window', size=(400, 300))
     window.show()
 
     running = True
