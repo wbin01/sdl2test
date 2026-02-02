@@ -48,12 +48,12 @@ class Frame(object):
         
         # Cursor
         self.__cursor_arrow = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_ARROW)
+        self.__cursor_hand = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_HAND)
+        self.__cursor_move = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_SIZEALL)
         self.__cursor_lr = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_SIZEWE)
         self.__cursor_tb = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_SIZENS)
         self.__cursor_tlbr = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_SIZENWSE)
         self.__cursor_trbl = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_SIZENESW)
-        self.__cursor_drag = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_HAND)
-        self.__cursor = self.__cursor_arrow
         
         # Control - Window
         self.__win_x = ctypes.c_int()
@@ -126,9 +126,7 @@ class Frame(object):
         return 0
     
     def __set_cursor(self, cursor_name: str) -> None:
-        # sdl2.SDL_FreeCursor(self.__cursor)
-
-        if self.__resizig:
+        if self.__resizig or not self.__csd_resize:
             return
         
         if cursor_name == 'topleft':
@@ -185,6 +183,7 @@ class Frame(object):
         if self.__csd_move and self.__mouse_action == 'drag':
             sdl2.SDL_SetWindowPosition(self.__win.window,
                 self.__win_x.value + mouse_delta_x, self.__win_y.value + mouse_delta_y)
+            sdl2.SDL_SetCursor(self.__cursor_move)
 
         # Resize
         elif self.__csd_resize and self.__mouse_action == 'resize':
@@ -237,5 +236,5 @@ class Frame(object):
 
 
 if __name__ == "__main__":
-    app = Frame()
+    app = Frame(csd_move=False)
     sys.exit(app.run())
