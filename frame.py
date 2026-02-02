@@ -5,6 +5,8 @@ import ctypes
 import sdl2
 import sdl2.ext
 
+from draw import Draw
+
 
 class Frame(object):
     """..."""
@@ -44,7 +46,11 @@ class Frame(object):
             flags=sdl2.SDL_WINDOW_BORDERLESS if self.__csd else None)
         
         self.__renderer = sdl2.SDL_CreateRenderer(
-            self.__win.window, -1, sdl2.SDL_RENDERER_ACCELERATED)
+            self.__win.window, -1, sdl2.SDL_RENDERER_ACCELERATED | sdl2.SDL_RENDERER_PRESENTVSYNC)
+        
+        sdl2.SDL_SetRenderDrawBlendMode(self.__renderer, sdl2.SDL_BLENDMODE_BLEND)
+
+        self.__draw = Draw(self.__win, self.__renderer)
         
         # Cursor
         self.__cursor_arrow = sdl2.SDL_CreateSystemCursor(sdl2.SDL_SYSTEM_CURSOR_ARROW)
@@ -123,10 +129,24 @@ class Frame(object):
                     
                     # sdl2.SDL_FreeCursor(self.__cursor)
                     sdl2.SDL_SetCursor(self.__cursor_arrow)
-
+            
+            self.__draw_background()
             sdl2.SDL_RenderPresent(self.__renderer)  # self.__win.refresh()
         return 0
     
+    def __draw_background(self) -> None:
+        # SDL_SetWindowShape(...)
+        w = ctypes.c_int()
+        h = ctypes.c_int()
+        sdl2.SDL_GetWindowSize(self.__win.window, ctypes.byref(w), ctypes.byref(h))
+
+        self.__draw.rect(0, 0, w.value, h.value, 20, (255, 255, 255, 255), frame_background=True)
+
+        w = ctypes.c_int(w.value - 2)
+        h = ctypes.c_int(h.value - 2)
+        
+        self.__draw.rect(1, 1, w.value, h.value, 19, (40, 40, 40, 255))
+
     def __set_cursor(self, cursor_name: str) -> None:
         if self.__resizig or self.__moving or not self.__csd_resize:
             return
