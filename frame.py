@@ -67,6 +67,7 @@ class Frame(object):
         self.__mouse_action = None # None | 'drag' | 'resize'
         self.__cursor_edge = None
         self.__resizig = False
+        self.__moving = False
         self.__saved_edge_name = None
 
         # Control - Mouse
@@ -118,6 +119,7 @@ class Frame(object):
                     self.__mouse_action = None
                     self.__saved_edge_name = None
                     self.__resizig = False
+                    self.__moving = False
                     
                     # sdl2.SDL_FreeCursor(self.__cursor)
                     sdl2.SDL_SetCursor(self.__cursor_arrow)
@@ -126,7 +128,7 @@ class Frame(object):
         return 0
     
     def __set_cursor(self, cursor_name: str) -> None:
-        if self.__resizig or not self.__csd_resize:
+        if self.__resizig or self.__moving or not self.__csd_resize:
             return
         
         if cursor_name == 'topleft':
@@ -184,6 +186,7 @@ class Frame(object):
             sdl2.SDL_SetWindowPosition(self.__win.window,
                 self.__win_x.value + mouse_delta_x, self.__win_y.value + mouse_delta_y)
             sdl2.SDL_SetCursor(self.__cursor_move)
+            self.__moving = True
 
         # Resize
         elif self.__csd_resize and self.__mouse_action == 'resize':
@@ -236,5 +239,5 @@ class Frame(object):
 
 
 if __name__ == "__main__":
-    app = Frame(csd_move=False)
+    app = Frame()
     sys.exit(app.run())
